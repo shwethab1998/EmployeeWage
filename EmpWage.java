@@ -1,5 +1,6 @@
 public class EmpWage {
-    public static final int noOfDayInMonth=20;
+    public static final int maxHrsInMonth=100;
+    public static final int noOfWorkDay=20;
     public static final int empRatePerHr=20;
     public static final int is_Part_Time=1;
     public static final int is_Full_Time=2;
@@ -7,12 +8,11 @@ public class EmpWage {
     public static void main(String arg[]) {
 
         System.out.println("WELCOME TO EMPLOYEE WAGE COMPUTATION");
-	int absent=0;
-        int empHrs = 0;
-        int empWage = 0;
-        int empWageForMonth=0;
-
-        for ( int day = 1; day <= noOfDayInMonth; day++ ) {
+	int empHrs = 0;
+        int totalEmpHrs = 0;
+        int totalWorkDay=0;
+        int totalEmpWage=0;
+	while( totalWorkDay < noOfWorkDay && totalEmpHrs <= maxHrsInMonth ) {
 
             int employee = (int) ((Math.random() * 10) % 3);
 
@@ -24,14 +24,14 @@ public class EmpWage {
                     empHrs = 8;
                     break;
                 default:
-                    absent=absent+1;
                     empHrs = 0;
             }
-            empWage = (empHrs * empRatePerHr);
-            empWageForMonth = (empWageForMonth+empWage);
-        }
-	System.out.println("Employee was absent for "+absent+" days");
-        System.out.println("Employee Wage of Month is : " + empWageForMonth);
-
+            totalWorkDay++;
+            totalEmpHrs = totalEmpHrs + empHrs;
+            }
+    totalEmpWage = ( totalEmpHrs * empRatePerHr );
+    System.out.println("Employee days:" + totalWorkDay+" Days");
+    System.out.println("Hours Worked: "+totalEmpHrs+" hrs");
+    System.out.println("Employee Total Salary is :"+ totalEmpWage+" Rs");
     }
 }
