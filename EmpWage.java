@@ -32,5 +32,6 @@ public class EmpWage {
         }
 	System.out.println("Employee was absent for "+absent+" days");
         System.out.println("Employee Wage of Month is : " + empWageForMonth);
+
     }
 }
