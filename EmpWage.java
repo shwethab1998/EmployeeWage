@@ -1,24 +1,26 @@
 import java.util.*;
-public class EmpWage implements iEmployeeWage
+public class employeeWage implements iEmployeeWage
 {
 	int counter=0;
 	int numberOfCompanies;
-	companyEmployeeWage[] companyEmployeeWageArray;
-	EmpWage(int n)
+	ArrayList<companyEmployeeWage> companyEmployeeWageList;
+	employeeWage(int n)
 	{
 		this.numberOfCompanies=n;
-		companyEmployeeWageArray=new companyEmployeeWage[numberOfCompanies];
+		companyEmployeeWageList=new ArrayList<companyEmployeeWage>();
 	}
 	public void addCompany(String company,int ratePerHour,int days,int maxHours)
 	{
-		companyEmployeeWageArray[counter++]=new companyEmployeeWage(company,ratePerHour,days,maxHours);
+		companyEmployeeWage companyempwage=new companyEmployeeWage(company,ratePerHour,days,maxHours);
+		companyEmployeeWageList.add(companyempwage);
 	}
 	public void computeWages()
 	{
-		for(int i=0;i<numberOfCompanies;i++)
+		for(int i=0;i<companyEmployeeWageList.size();i++)
 		{
-			companyEmployeeWageArray[i].setTotalWage(this.employeeWages(companyEmployeeWageArray[i]));
-			System.out.println(companyEmployeeWageArray[i]);
+			companyEmployeeWage companyempwage=companyEmployeeWageList.get(i);
+			companyempwage.setTotalWage(this.employeeWages(companyempwage));
+			System.out.println(companyempwage);
 			System.out.println("----------------------------");
 		}
 	}
@@ -68,7 +70,7 @@ public class EmpWage implements iEmployeeWage
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter no.of companies:");
 		int n=sc.nextInt();
-		employeeWage employeeWageArray=new employeeWage(n);
+		iEmployeeWage employeeWageList=new employeeWage(n);
 		for(int counter=1;counter<=n;counter++)
 		{
 			System.out.println("Enter name of company:");
@@ -79,8 +81,8 @@ public class EmpWage implements iEmployeeWage
 			int days=sc.nextInt();
 			System.out.println("Enter maximum working hours:");
 			int maxHours=sc.nextInt();
-			employeeWageArray.addCompany(company,ratePerHour,days,maxHours);
+			employeeWageList.addCompany(company,ratePerHour,days,maxHours);
 		}
-		employeeWageArray.computeWages();
+		employeeWageList.computeWages();
 	}
 }
