@@ -1,20 +1,29 @@
+package companyEmployeeWage;
 import java.util.*;
-public class EmpWage {
-	public static final int isPartTime=1;
-    public static final int isFullTime=2;
-    static String company;
-    static int ratePerHour;
-    static int days;
-    static int maxHours;
-    static int totalWage;
-    EmpWage(String company,int ratePerHour,int days,int maxHours)
-    {
-        this.company=company;
-	this.ratePerHour=ratePerHour;
-        this.days=days;
-        this.maxHours=maxHours;
-    }
-    public static int getWorkingHours(int check)
+public class EmpWage
+{
+	int counter=0;
+	int numberOfCompanies;
+	companyEmployeeWage[] companyEmployeeWageArray;
+	EmpWage(int n)
+	{
+		this.numberOfCompanies=n;
+		companyEmployeeWageArray=new companyEmployeeWage[numberOfCompanies];
+	}
+	public void addCompany(String company,int ratePerHour,int days,int maxHours)
+	{
+		companyEmployeeWageArray[counter++]=new companyEmployeeWage(company,ratePerHour,days,maxHours);
+	}
+	public void computeWages()
+	{
+		for(int i=0;i<numberOfCompanies;i++)
+		{
+			companyEmployeeWageArray[i].setTotalWage(this.employeeWages(companyEmployeeWageArray[i]));
+			System.out.println(companyEmployeeWageArray[i]);
+			System.out.println("----------------------------");
+		}
+	}
+    public int getWorkingHours(int check)
     {
         int hours;
         switch(check)
@@ -31,20 +40,20 @@ public class EmpWage {
         }
         return hours;
     }
-    public static int attendanceCheck()
+    public int attendanceCheck()
     {
         int result=(int)Math.floor((Math.random()*10)%3);
         return result;
     }
-    public static void print(int totalDays,int workHours,int totalHours,int dailySalary,int totalSalary)
+    public void print(int totalDays,int workHours,int totalHours,int dailySalary,int totalSalary)
     {
         System.out.println(totalDays+"\t"+workHours+"\t\t"+totalHours+"\t\t"+dailySalary+"\t\t"+totalSalary);
     }
-    public static void employeeWages()
+    public int employeeWages(companyEmployeeWage companyEmployee)
     {
         int check=0,workHours=0,dailySalary=0,totalSalary=0,totalHours=0,totalDays=0;
         System.out.println("Day\tDaily Hours\tTotal Hours\tDaily Wage\tTotal Wage");
-	while(totalHours<maxHours && totalDays<days)
+        while(totalHours<companyEmployee.maxHours && totalDays<companyEmployee.days)
         {
             totalDays+=1;
             check=attendanceCheck();
@@ -52,14 +61,17 @@ public class EmpWage {
             totalHours=totalHours+workHours;
             dailySalary=workHours*ratePerHour;
             totalSalary=totalHours*ratePerHour;
+            dailySalary=workHours*companyEmployee.ratePerHour;
+            totalSalary=totalHours*companyEmployee.ratePerHour;
             print(totalDays,workHours,totalHours,dailySalary,totalSalary);
         }
-        totalWage= totalSalary;
+        return totalSalary;
     }
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter no.of companies:");
 		int n=sc.nextInt();
+		EmpWage employeeWageArray=new EmpWage(n);
 		for(int counter=1;counter<=n;counter++)
 		{
 			System.out.println("Enter name of company:");
@@ -70,9 +82,8 @@ public class EmpWage {
 			int days=sc.nextInt();
 			System.out.println("Enter maximum working hours:");
 			int maxHours=sc.nextInt();
-			EmpWage companyname=new EmpWage(company,ratePerHour,days,maxHours);
-			companyname.employeeWages();
-			System.out.println("Employee wage in company "+companyname.company+" is "+companyname.totalWage);
+			employeeWageArray.addCompany(company,ratePerHour,days,maxHours);
 		}
+		employeeWageArray.computeWages();
 	}
 }
