@@ -1,10 +1,11 @@
+package companyEmployeeWage;
 import java.util.*;
-public class employeeWage implements iEmployeeWage
+public class EmpWage implements iEmployeeWage
 {
 	int counter=0;
 	int numberOfCompanies;
 	ArrayList<companyEmployeeWage> companyEmployeeWageList;
-	employeeWage(int n)
+	EmpWage(int n)
 	{
 		this.numberOfCompanies=n;
 		companyEmployeeWageList=new ArrayList<companyEmployeeWage>();
@@ -46,10 +47,6 @@ public class employeeWage implements iEmployeeWage
         int result=(int)Math.floor((Math.random()*10)%3);
         return result;
     }
-    public void print(int totalDays,int workHours,int totalHours,int dailySalary,int totalSalary)
-    {
-        System.out.println(totalDays+"\t"+workHours+"\t\t"+totalHours+"\t\t"+dailySalary+"\t\t"+totalSalary);
-    }
     public int employeeWages(companyEmployeeWage companyEmployee)
     {
         int check=0,workHours=0,dailySalary=0,totalSalary=0,totalHours=0,totalDays=0;
@@ -61,8 +58,12 @@ public class employeeWage implements iEmployeeWage
             workHours=getWorkingHours(check);
             totalHours=totalHours+workHours;
             dailySalary=workHours*companyEmployee.ratePerHour;
-            totalSalary=totalHours*companyEmployee.ratePerHour;
-            print(totalDays,workHours,totalHours,dailySalary,totalSalary);
+            companyEmployee.addDailyWage(dailySalary);
+        }
+        totalSalary=totalHours*companyEmployee.ratePerHour;
+        for(int i=0;i<companyEmployee.dailyWage.size();i++)
+        {
+        	System.out.println("Wage on day "+(i+1)+" is "+companyEmployee.dailyWage.get(i));
         }
         return totalSalary;
     }
