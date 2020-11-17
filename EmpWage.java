@@ -1,12 +1,16 @@
 package companyEmployeeWage;
+
 package iEmployeeWage;
+
 import java.util.*;
 public class EmpWage implements iEmployeeWage
 {
 	int counter=0;
 	int numberOfCompanies;
 	ArrayList<companyEmployeeWage> companyEmployeeWageList;
+
 	static Map<String,companyEmployeeWage> companyEmployeeWageMap;
+
 	EmpWage(int n)
 	{
 		this.numberOfCompanies=n;
